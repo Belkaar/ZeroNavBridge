@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<uses-feature
+		android:name="android.hardware.bluetooth_le"
+		android:required="true" />
+
+	<uses-permission
+		android:name="android.permission.BLUETOOTH"
+		android:maxSdkVersion="30" />
+	<uses-permission
+		android:name="android.permission.BLUETOOTH_ADMIN"
+		android:maxSdkVersion="30" />
+	<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+	<uses-permission
+		android:name="android.permission.BLUETOOTH_SCAN"
+		android:usesPermissionFlags="neverForLocation" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+
+	<application
+		android:allowBackup="true"
+		android:dataExtractionRules="@xml/data_extraction_rules"
+		android:fullBackupContent="@xml/backup_rules"
+		android:icon="@mipmap/ic_launcher"
+		android:label="@string/app_name"
+		android:roundIcon="@mipmap/ic_launcher_round"
+		android:supportsRtl="true"
+		android:theme="@style/Theme.ZeroNavBridge"
+		tools:targetApi="34">
+		<activity
+			android:name=".MainActivity"
+			android:exported="true"
+			android:label="@string/app_name"
+			android:screenOrientation="nosensor"
+			android:theme="@style/Theme.ZeroNavBridge">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+
+		<activity
+			android:name=".HelpActivity"
+			android:exported="false"
+			android:theme="@style/Theme.ZeroNavBridge" />
+
+		<activity
+			android:name=".StartActivity"
+			android:exported="true"
+			android:label="@string/title_activity_start"
+			android:theme="@style/Theme.ZeroNavBridge.Translucent">
+			<intent-filter>
+				<action android:name="team.burkart.zero.navbridge.START" />
+			</intent-filter>
+		</activity>
+
+		<receiver
+			android:name=".NavReceiver"
+			android:enabled="true"
+			android:exported="true">
+			<intent-filter>
+				<action android:name="team.burkart.zero.navbridge.UPDATENAV" />
+			</intent-filter>
+		</receiver>
+
+		<service
+			android:name=".BridgeService"
+			android:exported="false"
+			android:foregroundServiceType="connectedDevice"
+			android:label="@string/service_name">
+			<intent-filter>
+				<action android:name="team.burkart.zero.navbridge.UPDATENAV" />
+			</intent-filter>
+		</service>
+
+		<service android:name=".MapsNotificationListener"
+			android:label="@string/mapslistener_service_name"
+			android:exported="false"
+			android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+			<intent-filter>
+				<action android:name="android.service.notification.NotificationListenerService" />
+			</intent-filter>
+			<meta-data android:name="android.service.notification.default_filter_types" android:value="ongoing|alerting|silent" />
+			<meta-data android:name="android.service.notification.disabled_filter_types" android:value="conversations" />
+		</service>
+
+	</application>
+
+</manifest>

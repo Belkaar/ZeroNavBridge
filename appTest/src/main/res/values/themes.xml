@@ -1,0 +1,6 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+	<style name="Base.Theme.ZeroNavBridge" parent="android:Theme.Material.NoActionBar">
+	</style>
+
+	<style name="Theme.ZeroNavBridge" parent="Base.Theme.ZeroNavBridge" />
+</resources>
