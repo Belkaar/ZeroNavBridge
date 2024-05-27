@@ -3,6 +3,18 @@ This is an Android app that reads navigation instructions from Kurviger and Goog
 
 ## Usage
 Install the APK and open the app to set it up. After that it will work completely in the background.
+The APK can be found on the "Releases" area to the right in GitHub
+
+## Integration
+To use this bridge from another app, integrate appTest/src/main/java/team/burkart/zero/navbridge/Sender.kt.
+
+## Contributiom
+Contributions are welcome! Feel free to open issues or pull requests.
+
+## Known issues
+* The bike firmware does some funky rounding sometimes on the distance to destination
+* Sometimes the dash will stay on if you switch the ignition key to off and navigation instructions are displayed. Just cycle the ignition again.
+* The less distractions (2km) option does not alway work as sometimes the bike keeps displying old information.
 
 ## Privacy
 The app does not store any data besides the selected settings. It does not make any network requests. It does not access files on your phone.
