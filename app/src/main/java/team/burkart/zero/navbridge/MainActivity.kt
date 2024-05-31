@@ -132,7 +132,6 @@ class MainActivity : ComponentActivity() {
 			return
 		}
 
-		startForegroundService(Intent(this, BridgeService::class.java))
 		bindService(Intent(this, BridgeService::class.java), connection, Context.BIND_AUTO_CREATE)
 	}
 
