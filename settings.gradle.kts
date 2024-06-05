@@ -23,3 +23,4 @@ rootProject.name = "Zero Nav Bridge"
 include(":app")
 include(":appTest")
 include(":appIconhasher")
+include(":ZeroBLE")

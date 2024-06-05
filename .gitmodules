@@ -1,0 +1,3 @@
+[submodule "ZeroBLE"]
+	path = ZeroBLE
+	url = git@github.com:Belkaar/ZeroBLE.git
