@@ -28,15 +28,13 @@
 		<br/>1. Starte Dein Motorrad.
 		<br/>2. Stelle sicher, dass die Zero Next Gen App geschlossen ist. Das Motorrad darf kein Bluetooth-Symbol anzeigen.
 		<br/>3. Starte eine Navigation in der Kurviger app.
-		<br/>YDie Zero Bridge App muss nicht gestartet werden, ein Hintergrunddienst wird nach Bedarf gestartet und gestoppt.
+		<br/>Die Zero Bridge App muss nicht gestartet werden, ein Hintergrunddienst wird nach Bedarf gestartet und gestoppt.
 		<br/><br/>
 		<h2>Welche Motorräder sind kompatibel?</h2>
 		<br/>Alle Cypher III Modelle (ab 2020) mit aktueller Firmware sollten kompatibel sein. Diese Modelle wurden getestet:
 		<br/>- DSX/R (2023)
 		<br/><br/>
 		<h2>Datenschutz</h2>
-		<br/>The app does not store any data besides the selected settings. It does not make any network requests. It does not access files on your phone.
-		<br/>To use the Google Maps integration the app needs access to your notifications. It only reads notifications from Google Maps that contain navigation instructions. It does not save notification data.
 		<br/>Die App speichert keine Daten außer den Einstellungen. Sie macht keine Netzwerkzugriffe. Die greift nicht auf Daten auf dem Telefon zu.
 		<br/>Um die Google Maps Integration zu nutzen muss die App Zugriff auf Deine Benachrichtigungen erhalten. Sie liest nur Benachrichtigungen von Google Maps die Navigationsdaten enthalten. Sie speichert keine Daten aus den Notifikationen.
 		]]></string>
