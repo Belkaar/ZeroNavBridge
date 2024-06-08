@@ -175,13 +175,17 @@ class BridgeService : Service() {
 		LogUtil.setTimeStamp("SendTrigger")
 		sendTimerTask?.cancel()
 		sendTimerTask = null
-		val connection = bikeConnection ?: run {return;}
-		val packet = currentNavPacket.get() ?: run {return;}
-		LogUtil.log("Bridge: Sending ${packet.javaClass.simpleName}: ${packet}")
-		LogUtil.setTimeStamp("PacketOut")
-		connection.sendPacket(packet)
 		// Don't resend nav package to bike if showOnlyNearTurns is on and distance is
 		// more than 2km. Bike will hide nav screen after ~15 seconds
+		if (!suppressSend) {
+			val connection = bikeConnection ?: run { return; }
+			val packet = currentNavPacket.get() ?: run { return; }
+			LogUtil.log("Bridge: Sending ${packet.javaClass.simpleName}: ${packet}")
+			LogUtil.setTimeStamp("PacketOut")
+			connection.sendPacket(packet)
+		} else {
+			LogUtil.log("Bridge: Send suppressed")
+		}
 		sendTimerTask = object : TimerTask() {
 			override fun run() {
 				sendNextPacket()
@@ -216,8 +220,10 @@ class BridgeService : Service() {
 			(packet.nextManeuver == lastNavPacket.nextManeuver) &&
 			(packet.nextName == lastNavPacket.nextName)
 		) {
+			suppressSend = true
 			return
 		}
+		suppressSend = false
 		currentNavPacket.set(packet)
 		sendNextPacket()
 	}
@@ -235,5 +241,7 @@ class BridgeService : Service() {
 	private val timer : Timer = Timer()
 	private var inactivityTimerTask : TimerTask? = null
 	private var sendTimerTask : TimerTask? = null
+
+	private var suppressSend : Boolean = false
 
 }
