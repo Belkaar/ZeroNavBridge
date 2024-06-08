@@ -103,7 +103,11 @@ class BridgeService : Service() {
 		if (closing) {return;}
 		bikeConnection = connection
 		if (bikeConnection == null) {
-			tryConnectBike()
+			timer.schedule(object : TimerTask() {
+				override fun run() {
+					tryConnectBike()
+				}
+			},10000)
 		} else {
 			serviceStatus.set(Status(true, getString(R.string.status_connected)))
 			bikeConnection?.setPacketCallback(::onIncomingPacket)
