@@ -8,7 +8,8 @@
 	<string name="status_disabled">Deaktiviert</string>
 	<string name="setting_bridgeEnabled">Nav Bridge aktivieren</string>
 	<string name="setting_showOnlyNearTurns">Navigationsinfos nur  innerhalb 2km anzeigen</string>
-	<string name="setting_listenToMapsNotifications">Google Maps benachrichtigungen verwenden</string>
+	<string name="setting_listenToMapsNotifications">Google Maps Benachrichtigungen verwenden</string>
+	<string name="setting_listenToOsmAndNotifications">OsmAnd Benachrichtigungen verwenden</string>
 	<string name="setting_showDebugInfo">Debug-Informationen anzeigen</string>
 	<string name="permission_listenToMapsNotifications">Erlaube Benachrichtigungs-Zugriff für diese Funktion</string>
 	<string name="help_text"><![CDATA[
@@ -21,7 +22,7 @@
 		<br/>4. Starte die Zero Bridge App.
 		<br/>5. Genehmige die Bluetooth Berechtigung für die Zero Bridge.
 		<br/>6. Konfiguriere die Bridge im Hauptbildschirm.
-		<br/>7. Um Google Maps zu nutzen, schalte die Option ein und gewähre Zugriff auf Benachrichtigungen.
+		<br/>7. Um Google Maps / OsmAnd zu nutzen, schalte die Option ein und gewähre Zugriff auf Benachrichtigungen.
 		<br/>8. Starte Dein Motorrad. Wenn der Statustext grün wird ist alles bereit.
 		<br/><br/>
 		<h2>Schritte zur Nutzung der Bridge</h2>

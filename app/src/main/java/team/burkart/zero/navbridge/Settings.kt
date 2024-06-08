@@ -17,6 +17,10 @@ class Settings(context: Context) {
 		get() = preferences.getBoolean("listenToMapsNotifications", false)
 		set(value) {preferences.edit().putBoolean("listenToMapsNotifications", value).apply()}
 
+	var listenToOsmAndNotifications : Boolean
+		get() = preferences.getBoolean("listenToOsmAndNotifications", false)
+		set(value) {preferences.edit().putBoolean("listenToOsmAndNotifications", value).apply()}
+
 	var showDebugInfo : Boolean
 		get() = preferences.getBoolean("showDebugInfo", false)
 		set(value) {preferences.edit().putBoolean("showDebugInfo", value).apply()}

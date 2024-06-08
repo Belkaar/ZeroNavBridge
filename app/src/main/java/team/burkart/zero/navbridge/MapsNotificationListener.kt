@@ -14,6 +14,7 @@ import team.burkart.zero.packet.NavPacket
 class MapsNotificationListener : NotificationListenerService() {
 	companion object {
 		val mapsPackageName = "com.google.android.apps.maps"
+		val osmAndPackageNames = arrayOf("net.osmand","net.osmand.plus")
 
 		fun ensurePermission(context: Context) {
 			val component = ComponentName(context, MapsNotificationListener::class.java)
@@ -83,54 +84,94 @@ class MapsNotificationListener : NotificationListenerService() {
 		}
 		return dist.toInt()
 	}
+
+	private fun minutesFromString(string: String) : Int {
+		var result = 0
+		val etaParts = string.split("\\s+".toRegex())
+		for (i in 0..<etaParts.size/2) {
+			var mins = etaParts[i * 2].toInt()
+			if (etaParts[i * 2 + 1] == "h") {
+				mins *= 60
+			}
+			result += mins
+		}
+		return result;
+	}
+
 	@Suppress("DEPRECATION")
 	override fun onNotificationPosted(sbn: StatusBarNotification?) {
 		super.onNotificationPosted(sbn)
 		sbn ?: run {return}
-		if (sbn.packageName != mapsPackageName) {return;}
-		if (!settings.listenToMapsNotifications) {return;}
 
-		val notificationExtras = sbn.notification.extras
+		var navPacket : NavPacket? = null
 
-		/*
-		notificationExtras.keySet().forEach {
-			LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
-		}
-		*/
+		if (mapsPackageName == sbn.packageName && settings.listenToMapsNotifications) {
+			navPacket = NavPacket()
+			val notificationExtras = sbn.notification.extras
 
-		val navPacket = NavPacket()
-		try {
-			val str = notificationExtras.getCharSequence("android.title")!!.toString()
-			navPacket.nextManeuverDistance = distanceFromString(str)
-		} catch (_: Exception) {}
+			/*
+			notificationExtras.keySet().forEach {
+				LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
+			}
+			*/
 
-		try {
-			val blocks = notificationExtras.getString("android.subText")!!.split(" · ")
-			val etaParts = blocks[0].split("\\s+".toRegex()) //.split(Char(0x000A.toUShort()))
-			for (i in 0..<etaParts.size/2) {
-				var mins = etaParts[i * 2].toInt()
-				if (etaParts[i * 2 + 1] == "h") {
-					mins *= 60
-				}
+			try {
+				val str = notificationExtras.getCharSequence("android.title")!!.toString()
+				navPacket.nextManeuverDistance = distanceFromString(str)
+			} catch (_: Exception) {}
+
+			try {
+				val blocks = notificationExtras.getString("android.subText")!!.split(" · ")
+				val mins = minutesFromString(blocks[0])
 				navPacket.eta = navPacket.eta.plusMinutes(mins.toLong())
-			}
-			//distance
-			navPacket.destinationDistance = distanceFromString(blocks[1])
-		} catch (_: Exception) {}
+				//distance
+				navPacket.destinationDistance = distanceFromString(blocks[1])
+			} catch (_: Exception) {}
 
-		navPacket.nextName = notificationExtras.getCharSequence("android.text")?.toString() ?: ""
+			navPacket.nextName = notificationExtras.getCharSequence("android.text")?.toString() ?: ""
 
-		navPacket.nextManeuver = NavPacket.Companion.Maneuver.Straight
-		try {
-			val icon = notificationExtras.getParcelable("android.largeIcon") as Icon?
-			if (icon != null) {
-				val drawable = icon.loadDrawable(this)
-				if (drawable != null) {
-					navPacket.nextManeuver = iconMatcher.getManeuver(drawable)
+			navPacket.nextManeuver = NavPacket.Companion.Maneuver.Straight
+			try {
+				val icon = notificationExtras.getParcelable("android.largeIcon") as Icon?
+				if (icon != null) {
+					val drawable = icon.loadDrawable(this)
+					if (drawable != null) {
+						navPacket.nextManeuver = iconMatcher.getManeuver(drawable)
+					}
 				}
-			}
-		} catch (_: Exception) {}
+			} catch (_: Exception) {}
+		}
 
+		if (osmAndPackageNames.contains(sbn.packageName) && settings.listenToOsmAndNotifications) {
+			navPacket = NavPacket()
+			val notificationExtras = sbn.notification.extras
+			/*
+			notificationExtras.keySet().forEach {
+				LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
+			}
+			*/
+			try {
+				val str = notificationExtras.getCharSequence("android.title")!!.toString()
+				val blocks = str.split(" • ")
+				navPacket.nextManeuverDistance = distanceFromString(blocks[0])
+				navPacket.nextName = blocks[1]
+			} catch (_: Exception) {}
+
+			try {
+				val str = notificationExtras.getCharSequence("android.bigText")!!.toString()
+				val lines = str.split("\n")
+				val blocks = lines[1].split(" • ")
+				navPacket.destinationDistance = distanceFromString(blocks[0])
+				val mins = minutesFromString(blocks[1])
+				navPacket.eta = navPacket.eta.plusMinutes(mins.toLong());
+			} catch (_: Exception) {}
+
+			// unfortunately OsmAnd generates the icons on the fly, so matching is hard (for now)
+			navPacket.nextManeuver = NavPacket.Companion.Maneuver.Straight
+		}
+
+		if (navPacket == null) {return}
+		
 		if (bridgeService == null) {
 			val startIntent = Intent(this, StartActivity::class.java)
 			startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -143,12 +184,15 @@ class MapsNotificationListener : NotificationListenerService() {
 	override fun onNotificationRemoved(sbn: StatusBarNotification?) {
 		super.onNotificationRemoved(sbn)
 		sbn ?: run {return}
-		if (sbn.packageName != mapsPackageName) {return;}
-		if (!settings.listenToMapsNotifications) {return;}
-		// stop nav
-		if (bridgeService != null) {
-			bridgeService?.stopNavigation()
-			unbindService(connection)
+		if (
+			(mapsPackageName == sbn.packageName && settings.listenToMapsNotifications) ||
+			(osmAndPackageNames.contains(sbn.packageName) && settings.listenToOsmAndNotifications)
+		) {
+			// stop nav
+			if (bridgeService != null) {
+				bridgeService?.stopNavigation()
+				unbindService(connection)
+			}
 		}
 	}
 }

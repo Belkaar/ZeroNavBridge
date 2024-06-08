@@ -11,6 +11,7 @@
 	<string name="setting_bridgeEnabled">Enable Nav Bridge</string>
 	<string name="setting_showOnlyNearTurns">Only show navigation info within 2km</string>
 	<string name="setting_listenToMapsNotifications">Use Google Maps notifications</string>
+	<string name="setting_listenToOsmAndNotifications">Use OsmAnd notifications</string>
 	<string name="setting_showDebugInfo">Show debug information</string>
 	<string name="permission_listenToMapsNotifications">Enable notification access to use this feature.</string>
 	<string name="help_text"><![CDATA[
@@ -24,7 +25,7 @@
 		<br/>5. Make sure you grant the Bluetooth permission for Zero Bridge.
 		<br/>6. Change setting on the main screen as needed.
 		<br/>7. Switch on your bike. If the status text is green everything worked.
-		<br/>8. For using Google Maps enable the option and grant the notification access permission.
+		<br/>8. For using Google Maps / OsmAnd enable the option and grant the notification access permission.
 		<br/>9. Switch on your bike. If the status text is green everything worked.
 		<br/><br/>
 		<h2>Follow these steps to use the navigation bridge</h2>

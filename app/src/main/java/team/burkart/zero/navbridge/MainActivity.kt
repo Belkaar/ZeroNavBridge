@@ -102,6 +102,13 @@ class MainActivity : ComponentActivity() {
 			if (isChecked) {MapsNotificationListener.ensurePermission(this)}
 		}
 
+		findViewById<Switch>(R.id.listenToOsmAndNotifications).isChecked = settings.listenToOsmAndNotifications
+		if (settings.listenToOsmAndNotifications) {MapsNotificationListener.ensurePermission(this)	}
+		findViewById<Switch>(R.id.listenToOsmAndNotifications).setOnCheckedChangeListener { buttonView, isChecked ->
+			settings.listenToOsmAndNotifications = isChecked
+			if (isChecked) {MapsNotificationListener.ensurePermission(this)}
+		}
+
 		findViewById<Switch>(R.id.showDebugInfo).isChecked = settings.showDebugInfo
 		findViewById<Switch>(R.id.showDebugInfo).setOnCheckedChangeListener { buttonView, isChecked ->
 			settings.showDebugInfo = isChecked
