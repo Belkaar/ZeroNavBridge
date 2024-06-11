@@ -11,13 +11,13 @@ import android.service.notification.StatusBarNotification
 import android.widget.Toast
 import team.burkart.zero.packet.NavPacket
 
-class MapsNotificationListener : NotificationListenerService() {
+class NavNotificationListener : NotificationListenerService() {
 	companion object {
 		val mapsPackageName = "com.google.android.apps.maps"
 		val osmAndPackageNames = arrayOf("net.osmand","net.osmand.plus")
 
 		fun ensurePermission(context: Context) {
-			val component = ComponentName(context, MapsNotificationListener::class.java)
+			val component = ComponentName(context, NavNotificationListener::class.java)
 			val componentStrings = android.provider.Settings.Secure.getString(context.contentResolver, "enabled_notification_listeners").split(":")
 			componentStrings.forEach {
 				val testComponent = ComponentName.unflattenFromString(it)

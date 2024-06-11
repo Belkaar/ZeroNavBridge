@@ -96,17 +96,17 @@ class MainActivity : ComponentActivity() {
 		findViewById<Switch>(R.id.settingOnlyShowNearTurn).setOnCheckedChangeListener { buttonView, isChecked -> settings.maneuverShowDistance = if (isChecked) 2000 else 0 }
 
 		findViewById<Switch>(R.id.listenToMapsNotifications).isChecked = settings.listenToMapsNotifications
-		if (settings.listenToMapsNotifications) {MapsNotificationListener.ensurePermission(this)	}
+		if (settings.listenToMapsNotifications) {NavNotificationListener.ensurePermission(this)	}
 		findViewById<Switch>(R.id.listenToMapsNotifications).setOnCheckedChangeListener { buttonView, isChecked ->
 			settings.listenToMapsNotifications = isChecked
-			if (isChecked) {MapsNotificationListener.ensurePermission(this)}
+			if (isChecked) {NavNotificationListener.ensurePermission(this)}
 		}
 
 		findViewById<Switch>(R.id.listenToOsmAndNotifications).isChecked = settings.listenToOsmAndNotifications
-		if (settings.listenToOsmAndNotifications) {MapsNotificationListener.ensurePermission(this)	}
+		if (settings.listenToOsmAndNotifications) {NavNotificationListener.ensurePermission(this)	}
 		findViewById<Switch>(R.id.listenToOsmAndNotifications).setOnCheckedChangeListener { buttonView, isChecked ->
 			settings.listenToOsmAndNotifications = isChecked
-			if (isChecked) {MapsNotificationListener.ensurePermission(this)}
+			if (isChecked) {NavNotificationListener.ensurePermission(this)}
 		}
 
 		findViewById<Switch>(R.id.showDebugInfo).isChecked = settings.showDebugInfo
