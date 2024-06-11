@@ -18,17 +18,17 @@
 		<h2>Schritte zur Einrichtung der Bridge</h2>
 		<br/>1. Kopple das Motorrad mit der <a href="https://play.google.com/store/apps/details?id=com.zeromotorcycles.nextgen">Zero Next Gen</a> App.
 		<br/>2. Stelle sicher, dass die Zero Next Gen App geschlossen ist.
-		<br/>3. Installiere die <a href="https://play.google.com/store/apps/details?id=com.kurviger.app">Kurviger</a> App (Für die Navigation wird ein Abo benötigt).
+		<br/>3. Installiere die Navigations-App, die Du verwenden möchtest. Ich empfehle <a href="https://play.google.com/store/apps/details?id=com.kurviger.app">Kurviger</a> App (Für die Navigation wird ein Abo benötigt).
 		<br/>4. Starte die Zero Bridge App.
 		<br/>5. Genehmige die Bluetooth Berechtigung für die Zero Bridge.
 		<br/>6. Konfiguriere die Bridge im Hauptbildschirm.
-		<br/>7. Um Google Maps / OsmAnd zu nutzen, schalte die Option ein und gewähre Zugriff auf Benachrichtigungen.
+		<br/>7. Schalte die Benachrihtigungs-Option Deine App ein und gewähre Zugriff auf Benachrichtigungen.
 		<br/>8. Starte Dein Motorrad. Wenn der Statustext grün wird ist alles bereit.
 		<br/><br/>
 		<h2>Schritte zur Nutzung der Bridge</h2>
 		<br/>1. Starte Dein Motorrad.
 		<br/>2. Stelle sicher, dass die Zero Next Gen App geschlossen ist. Das Motorrad darf kein Bluetooth-Symbol anzeigen.
-		<br/>3. Starte eine Navigation in der Kurviger app.
+		<br/>3. Starte eine Navigation in Deiner Naviagtions-App.
 		<br/>Die Zero Bridge App muss nicht gestartet werden, ein Hintergrunddienst wird nach Bedarf gestartet und gestoppt.
 		<br/><br/>
 		<h2>Welche Motorräder sind kompatibel?</h2>
@@ -37,7 +37,7 @@
 		<br/><br/>
 		<h2>Datenschutz</h2>
 		<br/>Die App speichert keine Daten außer den Einstellungen. Sie macht keine Netzwerkzugriffe. Die greift nicht auf Daten auf dem Telefon zu.
-		<br/>Um die Google Maps Integration zu nutzen muss die App Zugriff auf Deine Benachrichtigungen erhalten. Sie liest nur Benachrichtigungen von Google Maps die Navigationsdaten enthalten. Sie speichert keine Daten aus den Notifikationen.
+		<br/>Um die Benachrichtigung-Integration zu nutzen muss die App Zugriff auf Deine Benachrichtigungen erhalten. Sie liest nur Benachrichtigungen von den aktivierten Navigations-Apps. Sie speichert keine Daten aus den Notifikationen.
 		]]></string>
 	<string name="settings_header">Einstellungen</string>
 	<string name="debug_header">Debug-Informationen</string>

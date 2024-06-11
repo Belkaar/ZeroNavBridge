@@ -20,18 +20,17 @@
 		<h2>Follow these steps to setup the navigation bridge</h2>
 		<br/>1. Pair the bike with your phone using the <a href="https://play.google.com/store/apps/details?id=com.zeromotorcycles.nextgen">Zero Next Gen</a> app.
 		<br/>2. Make sure the Zero Next Gen app is closed.
-		<br/>3. Install the <a href="https://play.google.com/store/apps/details?id=com.kurviger.app">Kurviger</a> app (you will need a subscription to enable navigation).
+		<br/>3. Install the navigation app you want to use, I recommend <a href="https://play.google.com/store/apps/details?id=com.kurviger.app">Kurviger</a> app (you will need a subscription to enable navigation).
 		<br/>4. Start the Zero Bridge app.
 		<br/>5. Make sure you grant the Bluetooth permission for Zero Bridge.
 		<br/>6. Change setting on the main screen as needed.
-		<br/>7. Switch on your bike. If the status text is green everything worked.
-		<br/>8. For using Google Maps / OsmAnd enable the option and grant the notification access permission.
-		<br/>9. Switch on your bike. If the status text is green everything worked.
+		<br/>7. Enable the notification use option for your app and grant the notification access permission.
+		<br/>8. Switch on your bike. If the status text is green everything worked.
 		<br/><br/>
 		<h2>Follow these steps to use the navigation bridge</h2>
 		<br/>1. Switch on your bike.
 		<br/>2. Make sure the Zero Next Gen app is closed. The bike should not be displaying the Bluetooth symbol.
-		<br/>3. Start a navigation in the Kurviger app or Google Maps.
+		<br/>3. Start a navigation in your navigation app.
 		<br/>You do not need to start the Zero Bridge app, a background service will be started and stopped on demand.
 		<br/><br/>
 		<h2>What models are compatible?</h2>
@@ -40,7 +39,7 @@
 		<br/><br/>
 		<h2>Data protection</h2>
 		<br/>The app does not store any data besides the selected settings. It does not make any network requests. It does not access files on your phone.
-		<br/>To use the Google Maps integration the app needs access to your notifications. It only reads notifications from Google Maps that contain navigation instructions. It does not save notification data.
+		<br/>To use the notification integration the app needs access to your notifications. It only reads notifications for the enabled navigation app(s). It does not save notification data.
 		]]></string>
 	<string name="settings_header">Settings</string>
 	<string name="debug_header">Debug info</string>
