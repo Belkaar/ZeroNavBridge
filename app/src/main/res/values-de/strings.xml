@@ -35,6 +35,11 @@
 		<br/>Alle Cypher III Modelle (ab 2020) mit aktueller Firmware sollten kompatibel sein. Diese Modelle wurden getestet:
 		<br/>- DSX/R (2023)
 		<br/><br/>
+		<h2>Bekannte Probleme</h2>
+		<br/>- Die Motorrad Firmware rundet sehr krativ bei der Entfernung zum Ziel
+		<br/>- Manchmal bleibt das Dash-Display an, wenn man die Zündung ausschaltet und Navigationsanweisungen angezeigt werden. Einfach die Zündung nochmal ein- und wieder ausschalten.
+		<br/>- Manche Hersteller haben strenge Batterisparrichtlinien. Wenn die Bridge nicht automatisch startet, folge <a href="https://dontkillmyapp.com/">Dont kill my app</a> für die Bridge und Deine Navigations-App.
+		<br/><br/>
 		<h2>Datenschutz</h2>
 		<br/>Die App speichert keine Daten außer den Einstellungen. Sie macht keine Netzwerkzugriffe. Die greift nicht auf Daten auf dem Telefon zu.
 		<br/>Um die Benachrichtigung-Integration zu nutzen muss die App Zugriff auf Deine Benachrichtigungen erhalten. Sie liest nur Benachrichtigungen von den aktivierten Navigations-Apps. Sie speichert keine Daten aus den Notifikationen.

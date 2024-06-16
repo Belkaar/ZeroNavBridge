@@ -37,6 +37,11 @@
 		<br/>All Cypher III models (2020 and newer) with up to date firmware should be compatible. The following models are known to work:
 		<br/>- DSX/R (2023)
 		<br/><br/>
+		<h2>Known issues</h2>
+		<br/>- The bike firmware does some funky rounding sometimes on the distance to destination
+		<br/>- Sometimes the dash will stay on if you switch the ignition key to off and navigation instructions are displayed. Just cycle the ignition again.
+		<br/>- Some device manufacturers have heavy battery restrictions. If the Bridge does not start automatically, apply <a href="https://dontkillmyapp.com/">Dont kill my app</a> steps to the Bridge and your navigation app.
+		<br/><br/>
 		<h2>Data protection</h2>
 		<br/>The app does not store any data besides the selected settings. It does not make any network requests. It does not access files on your phone.
 		<br/>To use the notification integration the app needs access to your notifications. It only reads notifications for the enabled navigation app(s). It does not save notification data.
