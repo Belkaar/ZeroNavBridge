@@ -170,7 +170,11 @@ class NavNotificationListener : NotificationListenerService() {
 			navPacket.nextManeuver = NavPacket.Companion.Maneuver.Straight
 		}
 
-		if (navPacket == null) {return}
+		if (navPacket == null ||
+			navPacket.nextManeuver == NavPacket.Companion.Maneuver.Undefined ||
+			navPacket.nextManeuverDistance == 0 ||
+			navPacket.nextName == ""
+		) {return}
 		
 		if (bridgeService == null) {
 			val startIntent = Intent(this, StartActivity::class.java)
