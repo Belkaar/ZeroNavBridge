@@ -191,7 +191,9 @@ class NavNotificationListener : NotificationListenerService() {
 			// stop nav
 			if (bridgeService != null) {
 				bridgeService?.stopNavigation()
+				try {
 				unbindService(connection)
+				} catch (_ : IllegalArgumentException) {}
 			}
 		}
 	}
