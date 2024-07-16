@@ -15,6 +15,11 @@ To use this bridge from another app, integrate appTest/src/main/java/team/burkar
 ## Contributiom
 Contributions are welcome! Feel free to open issues or pull requests.
 
+## Compatibility
+Known to work on these bikes, please feel free to report more:
+* DSR/X (2023)
+* SR/F (2023)
+
 ## Known issues
 * The bike firmware does some funky rounding sometimes on the distance to destination
 * Sometimes the dash will stay on if you switch the ignition key to off and navigation instructions are displayed. Just cycle the ignition again.
