@@ -19,6 +19,7 @@ Contributions are welcome! Feel free to open issues or pull requests.
 Known to work on these bikes, please feel free to report more:
 * DSR/X (2023)
 * SR/F (2023)
+* S gen 3
 
 ## Known issues
 * The bike firmware does some funky rounding sometimes on the distance to destination
