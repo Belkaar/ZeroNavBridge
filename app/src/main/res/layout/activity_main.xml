@@ -88,6 +88,25 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
+				android:text="@string/setting_listenToKurvigerNotifications" />
+
+			<Switch
+				android:id="@+id/listenToKurvigerNotifications"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:minWidth="48dp"
+				android:minHeight="48dp" />
+
+		</TableRow>
+
+		<TableRow
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" >
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
 				android:text="@string/setting_listenToMapsNotifications" />
 
 			<Switch

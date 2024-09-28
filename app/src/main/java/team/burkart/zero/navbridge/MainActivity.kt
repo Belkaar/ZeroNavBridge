@@ -95,6 +95,13 @@ class MainActivity : ComponentActivity() {
 		findViewById<Switch>(R.id.settingOnlyShowNearTurn).isChecked = settings.maneuverShowDistance > 0
 		findViewById<Switch>(R.id.settingOnlyShowNearTurn).setOnCheckedChangeListener { buttonView, isChecked -> settings.maneuverShowDistance = if (isChecked) 2000 else 0 }
 
+		findViewById<Switch>(R.id.listenToKurvigerNotifications).isChecked = settings.listenToKurvigerNotifications
+		if (settings.listenToKurvigerNotifications) {NavNotificationListener.ensurePermission(this)	}
+		findViewById<Switch>(R.id.listenToKurvigerNotifications).setOnCheckedChangeListener { buttonView, isChecked ->
+			settings.listenToKurvigerNotifications = isChecked
+			if (isChecked) {NavNotificationListener.ensurePermission(this)}
+		}
+
 		findViewById<Switch>(R.id.listenToMapsNotifications).isChecked = settings.listenToMapsNotifications
 		if (settings.listenToMapsNotifications) {NavNotificationListener.ensurePermission(this)	}
 		findViewById<Switch>(R.id.listenToMapsNotifications).setOnCheckedChangeListener { buttonView, isChecked ->
