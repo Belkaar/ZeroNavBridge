@@ -10,9 +10,11 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.widget.Toast
 import team.burkart.zero.packet.NavPacket
+import java.time.LocalTime
 
 class NavNotificationListener : NotificationListenerService() {
 	companion object {
+		val kurvigerPackageName = "com.kurviger.app"
 		val mapsPackageName = "com.google.android.apps.maps"
 		val osmAndPackageNames = arrayOf("net.osmand","net.osmand.plus")
 
@@ -105,6 +107,47 @@ class NavNotificationListener : NotificationListenerService() {
 
 		var navPacket : NavPacket? = null
 
+		if (kurvigerPackageName == sbn.packageName && settings.listenToKurvigerNotifications) {
+			navPacket = NavPacket()
+			val notificationExtras = sbn.notification.extras
+
+			if (notificationExtras.getCharSequence("android.title")!!.contains("Download")) {return}
+
+			/*
+			notificationExtras.keySet().forEach {
+				LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
+			}
+			*/
+
+			try {
+				val str = notificationExtras.getCharSequence("android.title")!!.toString()
+				navPacket.nextManeuverDistance = distanceFromString(str)
+			} catch (_: Exception) {}
+
+			try {
+				val blocks = notificationExtras.getString("android.subText")!!.split(" • ")
+				navPacket.destinationDistance = distanceFromString(blocks[1])
+				var time = LocalTime.parse(blocks[0].split(" ")[0]);
+				if (navPacket.eta.toLocalTime() > time) {
+					navPacket.eta = navPacket.eta.plusDays(1)
+				}
+				navPacket.eta = navPacket.eta.withHour(time.hour).withMinute(time.minute)
+			} catch (_: Exception) {}
+
+			navPacket.nextName = notificationExtras.getCharSequence("android.text")?.toString() ?: ""
+
+			navPacket.nextManeuver = NavPacket.Companion.Maneuver.Straight
+			try {
+				val icon = notificationExtras.getParcelable("android.largeIcon") as Icon?
+				if (icon != null) {
+					val drawable = icon.loadDrawable(this)
+					if (drawable != null) {
+						navPacket.nextManeuver = iconMatcher.getManeuver(drawable)
+					}
+				}
+			} catch (_: Exception) {}
+		}
+
 		if (mapsPackageName == sbn.packageName && settings.listenToMapsNotifications) {
 			navPacket = NavPacket()
 			val notificationExtras = sbn.notification.extras
@@ -196,7 +239,7 @@ class NavNotificationListener : NotificationListenerService() {
 			if (bridgeService != null) {
 				bridgeService?.stopNavigation()
 				try {
-				unbindService(connection)
+					unbindService(connection)
 				} catch (_ : IllegalArgumentException) {}
 			}
 		}

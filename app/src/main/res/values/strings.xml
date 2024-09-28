@@ -10,6 +10,7 @@
 	<string name="status_disabled">Disabled</string>
 	<string name="setting_bridgeEnabled">Enable Nav Bridge</string>
 	<string name="setting_showOnlyNearTurns">Only show navigation info within 2km</string>
+	<string name="setting_listenToKurvigerNotifications">Use Kurviger notifications</string>
 	<string name="setting_listenToMapsNotifications">Use Google Maps notifications</string>
 	<string name="setting_listenToOsmAndNotifications">Use OsmAnd notifications</string>
 	<string name="setting_showDebugInfo">Show debug information</string>

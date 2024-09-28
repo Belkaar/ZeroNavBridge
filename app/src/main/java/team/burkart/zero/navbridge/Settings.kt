@@ -13,6 +13,10 @@ class Settings(context: Context) {
 		get() = preferences.getInt("maneuverShowDistance", 0)
 		set(value) {preferences.edit().putInt("maneuverShowDistance", value).apply()}
 
+	var listenToKurvigerNotifications : Boolean
+		get() = preferences.getBoolean("listenToKurvigerNotifications", false)
+		set(value) {preferences.edit().putBoolean("listenToKurvigerNotifications", value).apply()}
+
 	var listenToMapsNotifications : Boolean
 		get() = preferences.getBoolean("listenToMapsNotifications", false)
 		set(value) {preferences.edit().putBoolean("listenToMapsNotifications", value).apply()}
