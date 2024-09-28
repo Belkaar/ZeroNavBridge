@@ -8,6 +8,7 @@
 	<string name="status_disabled">Deaktiviert</string>
 	<string name="setting_bridgeEnabled">Nav Bridge aktivieren</string>
 	<string name="setting_showOnlyNearTurns">Navigationsinfos nur  innerhalb 2km anzeigen</string>
+	<string name="setting_listenToKurvigerNotifications">Kurviger Benachrichtigungen verwenden</string>
 	<string name="setting_listenToMapsNotifications">Google Maps Benachrichtigungen verwenden</string>
 	<string name="setting_listenToOsmAndNotifications">OsmAnd Benachrichtigungen verwenden</string>
 	<string name="setting_showDebugInfo">Debug-Informationen anzeigen</string>

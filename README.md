@@ -1,7 +1,7 @@
 # ZeroNavBridge
 This is an Android app that reads navigation instructions from supported navigation apps and sends it via Bluetooth to a Zero Motorcycles Bike (Cipher III).
 Supported apps:
-* Kurviger (In development)
+* Kurviger (preliminary limited support)
 * Google Maps (works reasonably well)
 * OsmAnd (preliminary limited support)
 
