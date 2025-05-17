@@ -106,6 +106,9 @@ class NavNotificationListener : NotificationListenerService() {
 	override fun onNotificationPosted(sbn: StatusBarNotification?) {
 		super.onNotificationPosted(sbn)
 		sbn ?: run {return}
+		if (!settings.bridgeEnabled) {
+			return
+		}
 
 		var navPacket : NavPacket? = null
 
