@@ -226,7 +226,6 @@ class NavNotificationListener : NotificationListenerService() {
 		}
 
 		if (navPacket == null ||
-			navPacket.nextManeuver == NavPacket.Companion.Maneuver.Undefined ||
 			navPacket.nextManeuverDistance == 0 ||
 			navPacket.nextName == ""
 		) {return}
