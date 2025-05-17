@@ -9,6 +9,7 @@ import android.os.IBinder
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.widget.Toast
+import team.burkart.zero.LogUtil
 import team.burkart.zero.packet.NavPacket
 import java.time.LocalTime
 
@@ -38,6 +39,9 @@ class NavNotificationListener : NotificationListenerService() {
 		}
 
 	}
+
+	class DecodeError(type: String, field: String, cause: Throwable)
+		: Exception("$type::$field", cause)
 
 	private val iconMatcher = MapsIconMatcher(this)
 
@@ -107,110 +111,115 @@ class NavNotificationListener : NotificationListenerService() {
 
 		var navPacket : NavPacket? = null
 
-		if (kurvigerPackageName == sbn.packageName && settings.listenToKurvigerNotifications) {
-			navPacket = NavPacket()
-			val notificationExtras = sbn.notification.extras
+		try {
+			if (kurvigerPackageName == sbn.packageName && settings.listenToKurvigerNotifications) {
+				navPacket = NavPacket()
+				val notificationExtras = sbn.notification.extras
 
-			if (notificationExtras.getCharSequence("android.title")!!.contains("Download")) {return}
+				if (notificationExtras.getCharSequence("android.title")!!.contains("Download")) {return}
 
-			/*
-			notificationExtras.keySet().forEach {
-				LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
-			}
-			*/
-
-			try {
-				val str = notificationExtras.getCharSequence("android.title")!!.toString()
-				navPacket.nextManeuverDistance = distanceFromString(str)
-			} catch (_: Exception) {}
-
-			try {
-				val blocks = notificationExtras.getString("android.subText")!!.split(" • ")
-				navPacket.destinationDistance = distanceFromString(blocks[1])
-				var time = LocalTime.parse(blocks[0].split(" ")[0]);
-				if (navPacket.eta.toLocalTime() > time) {
-					navPacket.eta = navPacket.eta.plusDays(1)
+				/*
+				notificationExtras.keySet().forEach {
+					LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
 				}
-				navPacket.eta = navPacket.eta.withHour(time.hour).withMinute(time.minute)
-			} catch (_: Exception) {}
+				*/
 
-			navPacket.nextName = notificationExtras.getCharSequence("android.text")?.toString() ?: ""
+				try {
+					val str = notificationExtras.getCharSequence("android.title")!!.toString()
+					navPacket.nextManeuverDistance = distanceFromString(str)
+				} catch (e: Exception) {throw DecodeError(sbn.packageName, "android.title", e)}
 
-			navPacket.nextManeuver = NavPacket.Companion.Maneuver.Straight
-			try {
-				val icon = notificationExtras.getParcelable("android.largeIcon") as Icon?
-				if (icon != null) {
-					val drawable = icon.loadDrawable(this)
-					if (drawable != null) {
-						navPacket.nextManeuver = iconMatcher.getManeuver(drawable)
+				try {
+					val blocks = notificationExtras.getString("android.subText")!!.split(" • ")
+					navPacket.destinationDistance = distanceFromString(blocks[1])
+					var time = LocalTime.parse(blocks[0].split(" ")[0]);
+					if (navPacket.eta.toLocalTime() > time) {
+						navPacket.eta = navPacket.eta.plusDays(1)
 					}
-				}
-			} catch (_: Exception) {}
-		}
+					navPacket.eta = navPacket.eta.withHour(time.hour).withMinute(time.minute)
+				} catch (e: Exception) {throw DecodeError(sbn.packageName, "android.subText", e)}
 
-		if (mapsPackageName == sbn.packageName && settings.listenToMapsNotifications) {
-			navPacket = NavPacket()
-			val notificationExtras = sbn.notification.extras
+				navPacket.nextName = notificationExtras.getCharSequence("android.text")?.toString() ?: ""
 
-			/*
-			notificationExtras.keySet().forEach {
-				LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
-			}
-			*/
-
-			try {
-				val str = notificationExtras.getCharSequence("android.title")!!.toString()
-				navPacket.nextManeuverDistance = distanceFromString(str)
-			} catch (_: Exception) {}
-
-			try {
-				val blocks = notificationExtras.getString("android.subText")!!.split(" · ")
-				val mins = minutesFromString(blocks[0])
-				navPacket.eta = navPacket.eta.plusMinutes(mins.toLong())
-				//distance
-				navPacket.destinationDistance = distanceFromString(blocks[1])
-			} catch (_: Exception) {}
-
-			navPacket.nextName = notificationExtras.getCharSequence("android.text")?.toString() ?: ""
-
-			navPacket.nextManeuver = NavPacket.Companion.Maneuver.Straight
-			try {
-				val icon = notificationExtras.getParcelable("android.largeIcon") as Icon?
-				if (icon != null) {
-					val drawable = icon.loadDrawable(this)
-					if (drawable != null) {
-						navPacket.nextManeuver = iconMatcher.getManeuver(drawable)
+				navPacket.nextManeuver = NavPacket.Companion.Maneuver.Straight
+				try {
+					val icon = notificationExtras.getParcelable("android.largeIcon") as Icon?
+					if (icon != null) {
+						val drawable = icon.loadDrawable(this)
+						if (drawable != null) {
+							navPacket.nextManeuver = iconMatcher.getManeuver(drawable)
+						}
 					}
-				}
-			} catch (_: Exception) {}
-		}
-
-		if (osmAndPackageNames.contains(sbn.packageName) && settings.listenToOsmAndNotifications) {
-			navPacket = NavPacket()
-			val notificationExtras = sbn.notification.extras
-			/*
-			notificationExtras.keySet().forEach {
-				LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
+				} catch (e: Exception) {throw DecodeError(sbn.packageName, "android.largeIcon", e)}
 			}
-			*/
-			try {
-				val str = notificationExtras.getCharSequence("android.title")!!.toString()
-				val blocks = str.split(" • ")
-				navPacket.nextManeuverDistance = distanceFromString(blocks[0])
-				navPacket.nextName = blocks[1]
-			} catch (_: Exception) {}
 
-			try {
-				val str = notificationExtras.getCharSequence("android.bigText")!!.toString()
-				val lines = str.split("\n")
-				val blocks = lines[1].split(" • ")
-				navPacket.destinationDistance = distanceFromString(blocks[0])
-				val mins = minutesFromString(blocks[1])
-				navPacket.eta = navPacket.eta.plusMinutes(mins.toLong());
-			} catch (_: Exception) {}
+			if (mapsPackageName == sbn.packageName && settings.listenToMapsNotifications) {
+				navPacket = NavPacket()
+				val notificationExtras = sbn.notification.extras
 
-			// unfortunately OsmAnd generates the icons on the fly, so matching is hard (for now)
-			navPacket.nextManeuver = NavPacket.Companion.Maneuver.Straight
+				/*
+				notificationExtras.keySet().forEach {
+					LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
+				}
+				*/
+
+				try {
+					val str = notificationExtras.getCharSequence("android.title")!!.toString()
+					navPacket.nextManeuverDistance = distanceFromString(str)
+				} catch (e: Exception) {throw DecodeError(sbn.packageName, "android.title", e)}
+
+				try {
+					val blocks = notificationExtras.getString("android.subText")!!.split(" · ")
+					val mins = minutesFromString(blocks[0])
+					navPacket.eta = navPacket.eta.plusMinutes(mins.toLong())
+					//distance
+					navPacket.destinationDistance = distanceFromString(blocks[1])
+				} catch (e: Exception) {throw DecodeError(sbn.packageName, "android.largeIcon", e)}
+
+				navPacket.nextName = notificationExtras.getCharSequence("android.text")?.toString() ?: ""
+
+				navPacket.nextManeuver = NavPacket.Companion.Maneuver.Straight
+				try {
+					val icon = notificationExtras.getParcelable("android.largeIcon") as Icon?
+					if (icon != null) {
+						val drawable = icon.loadDrawable(this)
+						if (drawable != null) {
+							navPacket.nextManeuver = iconMatcher.getManeuver(drawable)
+						}
+					}
+				} catch (e: Exception) {throw DecodeError(sbn.packageName, "android.largeIcon", e)}
+			}
+
+			if (osmAndPackageNames.contains(sbn.packageName) && settings.listenToOsmAndNotifications) {
+				navPacket = NavPacket()
+				val notificationExtras = sbn.notification.extras
+				/*
+				notificationExtras.keySet().forEach {
+					LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
+				}
+				*/
+				try {
+					val str = notificationExtras.getCharSequence("android.title")!!.toString()
+					val blocks = str.split(" • ")
+					navPacket.nextManeuverDistance = distanceFromString(blocks[0])
+					navPacket.nextName = blocks[1]
+				} catch (e: Exception) {throw DecodeError(sbn.packageName, "android.largeIcon", e)}
+
+				try {
+					val str = notificationExtras.getCharSequence("android.bigText")!!.toString()
+					val lines = str.split("\n")
+					val blocks = lines[1].split(" • ")
+					navPacket.destinationDistance = distanceFromString(blocks[0])
+					val mins = minutesFromString(blocks[1])
+					navPacket.eta = navPacket.eta.plusMinutes(mins.toLong());
+				} catch (e: Exception) {throw DecodeError(sbn.packageName, "android.largeIcon", e)}
+
+				// unfortunately OsmAnd generates the icons on the fly, so matching is hard (for now)
+				navPacket.nextManeuver = NavPacket.Companion.Maneuver.Straight
+			}
+		} catch (e: Exception) {
+			LogUtil.log("Error decoding notification: $e")
+			return
 		}
 
 		if (navPacket == null ||
