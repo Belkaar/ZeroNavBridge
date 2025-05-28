@@ -19,21 +19,26 @@ class NavNotificationListener : NotificationListenerService() {
 
 		fun ensurePermission(context: Context) {
 			val component = ComponentName(context, NavNotificationListener::class.java)
-			val componentStrings = android.provider.Settings.Secure.getString(context.contentResolver, "enabled_notification_listeners").split(":")
-			componentStrings.forEach {
-				val testComponent = ComponentName.unflattenFromString(it)
-				if (testComponent != null && testComponent == component) {
-					return
+			try {
+				val componentStrings = android.provider.Settings.Secure.getString(context.contentResolver, "enabled_notification_listeners").split(":")
+				componentStrings.forEach {
+					val testComponent = ComponentName.unflattenFromString(it)
+					if (testComponent != null && testComponent == component) {
+						return
+					}
 				}
-			}
+			} catch (_ : Exception){}
 
 			Toast.makeText(
 				context, context.getString(R.string.permission_listenToMapsNotifications),
 				Toast.LENGTH_SHORT
 			).show()
-			val int = Intent("android.settings.NOTIFICATION_LISTENER_DETAIL_SETTINGS")
-			int.putExtra("android.provider.extra.NOTIFICATION_LISTENER_COMPONENT_NAME", component.flattenToString())
-			context.startActivity(int)
+			
+			try {
+				val int = Intent("android.settings.NOTIFICATION_LISTENER_DETAIL_SETTINGS")
+				int.putExtra("android.provider.extra.NOTIFICATION_LISTENER_COMPONENT_NAME", component.flattenToString())
+				context.startActivity(int)
+			} catch (_ : Exception){}
 		}
 
 	}
