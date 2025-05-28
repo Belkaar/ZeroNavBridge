@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.graphics.drawable.Icon
+import android.os.Bundle
 import android.os.IBinder
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
@@ -107,6 +108,12 @@ class NavNotificationListener : NotificationListenerService() {
 		return result;
 	}
 
+	private fun logExtras(notificationExtras: Bundle) {
+		notificationExtras.keySet().forEach {
+			LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
+		}
+	}
+
 	@Suppress("DEPRECATION")
 	override fun onNotificationPosted(sbn: StatusBarNotification?) {
 		super.onNotificationPosted(sbn)
@@ -117,16 +124,13 @@ class NavNotificationListener : NotificationListenerService() {
 
 		var navPacket : NavPacket? = null
 
+		var notificationExtras : Bundle? = null
 		try {
 			if (mapsPackageName == sbn.packageName && settings.listenToMapsNotifications) {
 				navPacket = NavPacket()
-				val notificationExtras = sbn.notification.extras
+				notificationExtras = sbn.notification.extras
 
-				/*
-				notificationExtras.keySet().forEach {
-					LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
-				}
-				*/
+				// logExtras(notificationExtras)
 
 				try {
 					val str = notificationExtras.getCharSequence("android.title")!!.toString()
@@ -158,11 +162,9 @@ class NavNotificationListener : NotificationListenerService() {
 			if (osmAndPackageNames.contains(sbn.packageName) && settings.listenToOsmAndNotifications) {
 				navPacket = NavPacket()
 				val notificationExtras = sbn.notification.extras
-				/*
-				notificationExtras.keySet().forEach {
-					LogUtil.log("extra: " + it + "=" + notificationExtras.get(it).toString())
-				}
-				*/
+
+				// logExtras(notificationExtras)
+
 				try {
 					val str = notificationExtras.getCharSequence("android.title")!!.toString()
 					val blocks = str.split(" • ")
@@ -184,6 +186,7 @@ class NavNotificationListener : NotificationListenerService() {
 			}
 		} catch (e: Exception) {
 			LogUtil.log("Error decoding notification: $e")
+			if (notificationExtras != null) {logExtras(notificationExtras)}
 			return
 		}
 
