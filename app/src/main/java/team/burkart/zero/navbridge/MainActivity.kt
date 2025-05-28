@@ -156,6 +156,17 @@ class MainActivity : ComponentActivity() {
 		textLog.doOnTextChanged { text, start, before, count ->
 			findViewById<ScrollView>(R.id.textLogScroll).fullScroll(View.FOCUS_DOWN)
 		}
+		textLog.setOnLongClickListener {
+			val sendIntent: Intent = Intent().apply {
+				action = Intent.ACTION_SEND
+				putExtra(Intent.EXTRA_TITLE, "Debug log")
+				putExtra(Intent.EXTRA_TEXT, textLog.text.toString())
+				type = "text/plain"
+			}
+			val shareIntent = Intent.createChooser(sendIntent, null)
+			startActivity(shareIntent)
+			true
+		}
 		if (!enabled) {
 			textLog.text = ""
 
