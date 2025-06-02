@@ -25,6 +25,7 @@ Known to work on these bikes, please feel free to report more:
 ## Known issues
 * The bike firmware does some funky rounding sometimes on the distance to destination
 * Sometimes the dash will stay on if you switch the ignition key to off and navigation instructions are displayed. Just cycle the ignition again.
+* While the nav display on the bike is shown, the grip heat overlay is not shown probalby, you can still change the settings.
 * Some device manufacturers have heavy battery restrictions. If the Bridge does not start automatically, apply https://dontkillmyapp.com steps to the Bridge and your navigation app.
 
 ## Privacy

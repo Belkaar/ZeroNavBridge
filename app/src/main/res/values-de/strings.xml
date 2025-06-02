@@ -41,6 +41,7 @@
 		<h2>Bekannte Probleme</h2>
 		<br/>- Die Motorrad Firmware rundet sehr krativ bei der Entfernung zum Ziel
 		<br/>- Manchmal bleibt das Dash-Display an, wenn man die Zündung ausschaltet und Navigationsanweisungen angezeigt werden. Einfach die Zündung nochmal ein- und wieder ausschalten.
+		<br/>- Während die Navigationsansicht angeziegt wird, ist das Griffheizungsmenü nicht sichtbar, kann aber bedient werden.
 		<br/>- Manche Hersteller haben strenge Batteriesparrichtlinien. Wenn die Bridge nicht automatisch startet, folge <a href="https://dontkillmyapp.com/">Dont kill my app</a> für die Bridge und Deine Navigations-App.
 		<br/><br/>
 		<h2>Datenschutz</h2>
