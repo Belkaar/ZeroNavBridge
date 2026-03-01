@@ -1,4 +1,9 @@
 # ZeroNavBridge
+
+**Important**: Tell your dealer not to update to the latest Dashboard firmware, the app does not work with 8v36 any more! 
+
+Unfortunately I cannot downgrade this firmware, so I cannot test any further patches, but feel free to submit issues.
+
 This is an Android app that reads navigation instructions from supported navigation apps and sends it via Bluetooth to a Zero Motorcycles Bike (Cipher III).
 Supported apps:
 * Kurviger (preliminary limited support)
@@ -16,6 +21,8 @@ To use this bridge from another app, integrate appTest/src/main/java/team/burkar
 Contributions are welcome! Feel free to open issues or pull requests.
 
 ## Compatibility
+**Important**: Dashboard version 8v36 is not compatible any more!
+
 Known to work on these bikes, please feel free to report more:
 * DSR/X (2023)
 * SR/F (2023)
